@@ -1,0 +1,56 @@
+// Authentication (Aap kon ho?)
+// Authentication ka matlab hai user ki identity check karna.
+
+// Yani system check karta hai ke login karne wala user asli hai ya nahi.
+
+// Example:
+// - User email enter karta hai.
+// - Password enter karta hai.
+// - System email aur password check karta hai.
+// - Agar correct hain toh login successful.
+// Authentication kaise kaam karti hai?
+// Suppose user website par register karta hai:
+// 1. User name, email aur password enter karta hai.
+// 2. Backend password ko bcryptjs se hash karta hai.
+// 3. User ka data MongoDB mein save hota hai.
+// 4. User login karta hai.
+// 5. Backend email aur password check karta hai.
+//  6. Sahi hone par JWT Token generate karta hai.
+// Token kya hota hai?
+// Token ek digital pass ki tarah hota hai.
+
+// Jab user login karta hai toh backend usko ek JWT token deta hai.
+
+// React is token ko requests ke saath backend par bhejta hai.
+
+// Backend token verify karke check karta hai ke user authenticated hai ya nahi.
+. Authorization (Aap kya kar sakte ho?)
+Authorization ka matlab hai user ko permission dena ke woh kya kar sakta hai.
+
+Example:
+
+Suppose ek website hai:
+- Admin products add kar sakta hai.
+- Admin products delete kar sakta hai.
+- Normal user sirf products dekh aur buy kar sakta hai.
+Yani system check karta hai ke user ke paas permission hai ya nahi.
+Authorization = What can you do?
+Authentication vs Authorization
+Authentication	Authorization
+Identity check karta hai	Permission check karta hai
+Aap kon ho?	Aap kya kar sakte ho?
+Login	Access permission
+Email + Password	Admin / User Role
+Authentication = Login check
+
+
+
+Authorization = Permission check
+Token kya hota hai?
+Token ek digital pass ki tarah hota hai.
+
+Jab user login karta hai toh backend usko ek JWT token deta hai.
+
+React is token ko requests ke saath backend par bhejta hai.
+
+Backend token verify karke check karta hai ke user authenticated hai ya nahi.
