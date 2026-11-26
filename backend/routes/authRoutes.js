@@ -3,7 +3,9 @@ const router = express.Router();
 
 const {
     register,
-    login
+    login,
+    logout
+    
 } = require("../controller/authController");
 const {
     authMiddleware,
@@ -13,6 +15,8 @@ const {
 router.post("/register", register);
 
 router.post("/login", login);
+
+router.post("/logout", logout);
 
 // Protected route
 router.get("/profile", authMiddleware, (req, res) => {

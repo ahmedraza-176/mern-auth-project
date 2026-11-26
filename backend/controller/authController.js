@@ -5,28 +5,28 @@ const jwt = require("jsonwebtoken");
 // register 
 const register = async (req, res) => {
     try {
-
         const { name, email, password } = req.body;
 
-        const existuser = await User.findOne({ email });
+        // Check karo user pehle se exist toh nahi karta
+        const existUser = await User.findOne({ email });
 
-        if (existuser) {
+        if (existUser) {
             return res.status(400).json({
                 message: "User already exists"
             });
         }
 
-        // Password hash
-        const Passwordhash = await bcrypt.hash(password, 10);
+        // Password hash karo
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user
+        // Database mein user create karo
         const user = await User.create({
             name,
             email,
-            password: Passwordhash
+            password: hashedPassword
         });
 
-        // Response
+        // Success response frontend ko bhejo
         res.status(201).json({
             message: "Register successful",
             user: {
@@ -37,11 +37,9 @@ const register = async (req, res) => {
         });
 
     } catch (error) {
-
         res.status(500).json({
             message: error.message
         });
-
     }
 };
 // LOGIN
@@ -71,22 +69,30 @@ const login = async (req, res) => {
             });
         }
 
+       
         // Generate token
-        const token = jwt.sign(
-            {
-                id: user._id,
-                role: user.role
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1d"
-            }
-        );
+const token = jwt.sign(
+    {
+        id: user._id,
+        role: user.role
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: "1d"
+    }
+);
 
-        res.json({
-            message: "Login successful",
-            token
-        });
+// Save token in cookie
+res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    maxAge: 24 * 60 * 60 * 1000
+});
+
+res.json({
+    message: "Login successful"
+});
 
     } catch (error) {
 
@@ -96,4 +102,22 @@ const login = async (req, res) => {
 
     }
 };
-module.exports={register,login};
+const logout = (req, res) => {
+
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax"
+    });
+
+    res.json({
+        message: "Logout successful"
+    });
+
+};
+
+module.exports = {
+    register,
+    login,
+    logout
+};

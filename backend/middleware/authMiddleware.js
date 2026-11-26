@@ -8,18 +8,21 @@
 // split(" ") isko 2 parts mein divide karta hai:
 // - [0] = Bearer
 // - [1] = Actual token
-const jwt = require("jsonwebtoken");
+
 // Check karega user login hai ya nahi.
 // Token check
+// Frontend se token receive karta hai.req.headers.authorization?
+const jwt = require("jsonwebtoken");
+
 const authMiddleware = (req, res, next) => {
 
     try {
-// Frontend se token receive karta hai.req.headers.authorization?
-        const token = req.headers.authorization?.split(" ")[1];
+
+        const token = req.cookies.token;
 
         if (!token) {
             return res.status(401).json({
-                message: "Token required"
+                message: "Please login first"
             });
         }
 
@@ -40,6 +43,8 @@ const authMiddleware = (req, res, next) => {
 
     }
 };
+
+
 // Check karega user admin hai ya nahi.
 const adminMiddleware = (req, res, next) => {
 
