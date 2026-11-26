@@ -10,6 +10,7 @@
 // - [1] = Actual token
 const jwt = require("jsonwebtoken");
 // Check karega user login hai ya nahi.
+// Token check
 const authMiddleware = (req, res, next) => {
 
     try {
